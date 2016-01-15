@@ -2,8 +2,8 @@ import socket
 import struct
 import time
 
-COMPUTER_IP = "192.168.1.90"
-PORT = 9999
+COMPUTER_IP = "192.168.1.110"
+PORT = 0
 
 
 def unpack_raw(data):
@@ -67,6 +67,7 @@ if __name__ == "__main__":
     last_timestamp = time.time()
 
     while True:
+        print "here"
         sensor_data, _ = sock.recvfrom(1024)
         if sensor_data[:6] == "/1/raw":
             timestamp = time.time()
@@ -79,9 +80,9 @@ if __name__ == "__main__":
             # account for measured error when sensor isn't moving
             # Measurement 1: 1.057227	-3.283120	-3.786003)
             # Measurement 2: 1.113599	-3.320273	-3.748888)
-            gyro_euler_read[0] += 0.278754
+            """gyro_euler_read[0] += 0.278754
             gyro_euler_read[1] += 3.983473
-            gyro_euler_read[2] += 3.755614
+            gyro_euler_read[2] += 3.755614"""
 
             for i in range(3):
                 # integrate values by time
@@ -93,6 +94,6 @@ if __name__ == "__main__":
             prev_gyro_euler = gyro_euler_read
             measure_cnt += 1
 
-            print "\rAcce:", "%5.2f\t%5.2f\t%5.2f\t\t" % tuple(acce), "Gyro:", "%5.2f\t%5.2f\t%5.2f" % tuple(gyro_euler_read), "Error:", "%5f\t%5f\t%5f" % tuple(map(lambda a: a / measure_cnt, gyro_avg)),
-            # print "\rAcce:", "%5d\t%5d\t%5d\t\t" % acce, "Gyro:", "%5d\t%5d\t%5d" % gyro, max_acce, max_gyro,
+            #print "\rAcce:", "%5.2f\t%5.2f\t%5.2f\t\t" % tuple(acce), "Gyro:", "%5.2f\t%5.2f\t%5.2f" % tuple(gyro_euler_read), "Error:", "%5f\t%5f\t%5f" % tuple(map(lambda a: a / measure_cnt, gyro_avg)),
+            print "\rAcce:", "%5d\t%5d\t%5d\t\t" % acce, "Gyro:", "%5d\t%5d\t%5d" % gyro, max_acce, max_gyro,
             # print "\rGyro:", "%5.2f\t%5.2f\t%5.2f" % tuple(gyro_euler),
