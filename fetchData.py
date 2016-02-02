@@ -1,9 +1,24 @@
+from threading import Thread
+from time import sleep
+from collections import deque
 import socket
 import struct
 import time
+import sys
+import readchar
 
-COMPUTER_IP = "192.168.1.90"
-PORT = 9999
+import matplotlib
+
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+
+PORT = 10337
+MODE = 0  # 0 is playing, 1 is recording, 2 is quitting
+
+PLAYING_QUEUE_SIZE = 600
+ABS_Y_AXIS = 250
+
+PLOTTING_FPS = 0.06
 
 
 def unpack_raw(data):
@@ -55,44 +70,97 @@ def format_and_write_to_file(data, file_pointer):
     file_pointer.write(result[:-1] + "\n")
 
 
-if __name__ == "__main__":
-    # open socket to and receive sensor data
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.bind((COMPUTER_IP, PORT))
-
-    gyro_euler = [0., 0., 0.]
-    prev_gyro_euler = [0., 0., 0.]
-    gyro_avg = [0., 0., 0.]
-    measure_cnt = 0
-    last_timestamp = time.time()
-
+def read_char():
+    global MODE
     while True:
-        sensor_data, _ = sock.recvfrom(1024)
-        if sensor_data[:6] == "/1/raw":
-            timestamp = time.time()
-            raw_data = unpack_raw(sensor_data)
-            # get acceleration in m/s^2
-            acce = map(convert_acce_to_units, raw_data[:3])
-            # get angular velocity in degrees per second
-            gyro_euler_read = map(convert_gyro_to_units, raw_data[3:6])
+        input_char = readchar.readchar()
+        if input_char == 'r':
+            MODE = 1
+            print "Started recording"
+            sleep(3)
+            print "Stopped recording"
+            MODE = 0
+        elif input_char == 'p':
+            MODE = 0
+            print "Entered playing mode"
+        elif input_char == 'q':
+            MODE = 2
+            print "Quitting"
+            sys.exit()
 
-            # account for measured error when sensor isn't moving
-            # Measurement 1: 1.057227	-3.283120	-3.786003)
-            # Measurement 2: 1.113599	-3.320273	-3.748888)
-            gyro_euler_read[0] += 0.278754
-            gyro_euler_read[1] += 3.983473
-            gyro_euler_read[2] += 3.755614
 
-            for i in range(3):
-                # integrate values by time
-                gyro_euler[i] += (gyro_euler_read[i] + prev_gyro_euler[i]) / 2.0 * (timestamp - last_timestamp)
-                # average
-                gyro_avg[i] += gyro_euler_read[i]
+if __name__ == "__main__":
 
-            last_timestamp = timestamp
-            prev_gyro_euler = gyro_euler_read
-            measure_cnt += 1
+    # start reading console in another thread
+    thread = Thread(target=read_char, args=())
+    thread.start()
 
-            print "\rAcce:", "%5.2f\t%5.2f\t%5.2f\t\t" % tuple(acce), "Gyro:", "%5.2f\t%5.2f\t%5.2f" % tuple(gyro_euler_read), "Error:", "%5f\t%5f\t%5f" % tuple(map(lambda a: a / measure_cnt, gyro_avg)),
-            # print "\rAcce:", "%5d\t%5d\t%5d\t\t" % acce, "Gyro:", "%5d\t%5d\t%5d" % gyro, max_acce, max_gyro,
-            # print "\rGyro:", "%5.2f\t%5.2f\t%5.2f" % tuple(gyro_euler),
+    try:
+        # prepare sensor connection
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setblocking(0)
+        sock.bind(("0.0.0.0", PORT))
+    except Exception as e:
+        print e
+        sys.exit()
+
+    # gestures helper
+    recorded_gestures = []
+    current_gesture = []
+    circular_queue = deque([(0, 0, 0) for i in range(0, 600)], PLAYING_QUEUE_SIZE)
+
+    fig1 = plt.figure()
+    subplot_x = fig1.add_subplot(221)
+    plt.axis((0, PLAYING_QUEUE_SIZE, -ABS_Y_AXIS, ABS_Y_AXIS))
+    subplot_y = fig1.add_subplot(222)
+    plt.axis((0, PLAYING_QUEUE_SIZE, -ABS_Y_AXIS, ABS_Y_AXIS))
+    subplot_z = fig1.add_subplot(223)
+    plt.axis((0, PLAYING_QUEUE_SIZE, -ABS_Y_AXIS, ABS_Y_AXIS))
+
+    # some X and Y data
+    x = range(0, PLAYING_QUEUE_SIZE)
+    y = [0] * PLAYING_QUEUE_SIZE
+
+    plt.ion()
+    subplot_x, = subplot_x.plot(x, y, "-")
+    subplot_y, = subplot_y.plot(x, y, "-")
+    subplot_z, = subplot_z.plot(x, y, "-")
+
+    # draw and show it
+    fig1.canvas.draw()
+    plt.show()
+
+    prev_time = time.time()
+    # start receiving data in this thread
+    while True:
+        try:
+            sensor_data, x = sock.recvfrom(1024)
+
+            if sensor_data[:6] == "/0/eul":
+                euler_raw = unpack_eul(sensor_data)
+                print "\rEulers:", "%5.2f\t%5.2f\t%5.2f\t\t" % (euler_raw[0], euler_raw[1], euler_raw[2]),
+                if MODE == 1:
+                    current_gesture.append(euler_raw)
+                elif MODE == 0:
+                    """if len(current_gesture) > 0:
+                        recorded_gestures.append(current_gesture)
+                        current_gesture = []
+                    """
+                    circular_queue.append(euler_raw)
+
+                    # draw only every 10th change
+                    if time.time() - prev_time > PLOTTING_FPS:
+                        prev_time = time.time()
+                        subplot_x.set_ydata([a[0] for a in circular_queue])
+                        subplot_y.set_ydata([a[1] for a in circular_queue])
+                        subplot_z.set_ydata([a[2] for a in circular_queue])
+                        fig1.canvas.draw()
+                elif MODE == 2:
+                    break
+
+        except socket.error as e:
+            if e[0] != 35:
+                print e
+
+    sock.close()
+    sys.exit()
