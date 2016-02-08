@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54b5dbb6-b02b-4c21-97ed-61a5c4f850b8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GaussianMixtureModel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GaussianMixtureModel.py" afterPath="$PROJECT_DIR$/GaussianMixtureModel.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py" afterPath="$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fetchData.py" afterPath="$PROJECT_DIR$/fetchData.py" />
     </list>
     <ignored path="GestureRecognition.iws" />
@@ -33,16 +32,16 @@
       <file leaf-file-name="fetchData.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fetchData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33948863">
-              <caret line="226" column="22" selection-start-line="226" selection-start-column="22" selection-end-line="226" selection-end-column="22" />
+            <state vertical-scroll-proportion="-1.5649794">
+              <caret line="87" column="49" selection-start-line="87" selection-start-column="49" selection-end-line="87" selection-end-column="49" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
-                <element signature="e#1041#1088#0" expanded="false" />
-                <element signature="e#1117#1157#0" expanded="false" />
-                <element signature="e#1187#1227#0" expanded="false" />
-                <element signature="e#1266#1292#0" expanded="false" />
-                <element signature="e#1331#1360#0" expanded="false" />
-                <element signature="e#1402#1428#0" expanded="false" />
+                <element signature="e#860#907#0" expanded="false" />
+                <element signature="e#936#976#0" expanded="false" />
+                <element signature="e#1006#1046#0" expanded="false" />
+                <element signature="e#1085#1111#0" expanded="false" />
+                <element signature="e#1150#1179#0" expanded="false" />
+                <element signature="e#1221#1247#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -52,7 +51,7 @@
         <entry file="file://$PROJECT_DIR$/GaussianMixtureModel.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+              <caret line="4" column="112" selection-start-line="4" selection-start-column="112" selection-end-line="4" selection-end-column="112" />
               <folding />
             </state>
           </provider>
@@ -62,17 +61,7 @@
         <entry file="file://$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xmm.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xmm/xmm.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.666667">
-              <caret line="5330" column="8" selection-start-line="5330" selection-start-column="8" selection-end-line="5330" selection-end-column="8" />
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -86,8 +75,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py" />
         <option value="$PROJECT_DIR$/GaussianMixtureModel.py" />
+        <option value="$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py" />
         <option value="$PROJECT_DIR$/fetchData.py" />
       </list>
     </option>
@@ -424,7 +413,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32806325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32806325" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32806325" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -471,12 +460,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1041#1088#0" expanded="false" />
-            <element signature="e#1117#1157#0" expanded="false" />
-            <element signature="e#1187#1227#0" expanded="false" />
-            <element signature="e#1266#1292#0" expanded="false" />
-            <element signature="e#1331#1360#0" expanded="false" />
-            <element signature="e#1402#1428#0" expanded="false" />
+            <element signature="e#860#907#0" expanded="false" />
+            <element signature="e#936#976#0" expanded="false" />
+            <element signature="e#1006#1046#0" expanded="false" />
+            <element signature="e#1085#1111#0" expanded="false" />
+            <element signature="e#1150#1179#0" expanded="false" />
+            <element signature="e#1221#1247#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -495,12 +484,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1041#1088#0" expanded="false" />
-            <element signature="e#1117#1157#0" expanded="false" />
-            <element signature="e#1187#1227#0" expanded="false" />
-            <element signature="e#1266#1292#0" expanded="false" />
-            <element signature="e#1331#1360#0" expanded="false" />
-            <element signature="e#1402#1428#0" expanded="false" />
+            <element signature="e#860#907#0" expanded="false" />
+            <element signature="e#936#976#0" expanded="false" />
+            <element signature="e#1006#1046#0" expanded="false" />
+            <element signature="e#1085#1111#0" expanded="false" />
+            <element signature="e#1150#1179#0" expanded="false" />
+            <element signature="e#1221#1247#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -518,12 +507,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1041#1088#0" expanded="false" />
-            <element signature="e#1117#1157#0" expanded="false" />
-            <element signature="e#1187#1227#0" expanded="false" />
-            <element signature="e#1266#1292#0" expanded="false" />
-            <element signature="e#1331#1360#0" expanded="false" />
-            <element signature="e#1402#1428#0" expanded="false" />
+            <element signature="e#860#907#0" expanded="false" />
+            <element signature="e#936#976#0" expanded="false" />
+            <element signature="e#1006#1046#0" expanded="false" />
+            <element signature="e#1085#1111#0" expanded="false" />
+            <element signature="e#1150#1179#0" expanded="false" />
+            <element signature="e#1221#1247#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -541,12 +530,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1041#1088#0" expanded="false" />
-            <element signature="e#1117#1157#0" expanded="false" />
-            <element signature="e#1187#1227#0" expanded="false" />
-            <element signature="e#1266#1292#0" expanded="false" />
-            <element signature="e#1331#1360#0" expanded="false" />
-            <element signature="e#1402#1428#0" expanded="false" />
+            <element signature="e#860#907#0" expanded="false" />
+            <element signature="e#936#976#0" expanded="false" />
+            <element signature="e#1006#1046#0" expanded="false" />
+            <element signature="e#1085#1111#0" expanded="false" />
+            <element signature="e#1150#1179#0" expanded="false" />
+            <element signature="e#1221#1247#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -557,12 +546,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1041#1088#0" expanded="false" />
-            <element signature="e#1117#1157#0" expanded="false" />
-            <element signature="e#1187#1227#0" expanded="false" />
-            <element signature="e#1266#1292#0" expanded="false" />
-            <element signature="e#1331#1360#0" expanded="false" />
-            <element signature="e#1402#1428#0" expanded="false" />
+            <element signature="e#860#907#0" expanded="false" />
+            <element signature="e#936#976#0" expanded="false" />
+            <element signature="e#1006#1046#0" expanded="false" />
+            <element signature="e#1085#1111#0" expanded="false" />
+            <element signature="e#1150#1179#0" expanded="false" />
+            <element signature="e#1221#1247#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -573,12 +562,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1041#1088#0" expanded="false" />
-            <element signature="e#1117#1157#0" expanded="false" />
-            <element signature="e#1187#1227#0" expanded="false" />
-            <element signature="e#1266#1292#0" expanded="false" />
-            <element signature="e#1331#1360#0" expanded="false" />
-            <element signature="e#1402#1428#0" expanded="false" />
+            <element signature="e#860#907#0" expanded="false" />
+            <element signature="e#936#976#0" expanded="false" />
+            <element signature="e#1006#1046#0" expanded="false" />
+            <element signature="e#1085#1111#0" expanded="false" />
+            <element signature="e#1150#1179#0" expanded="false" />
+            <element signature="e#1221#1247#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -662,18 +651,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py">
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/numpy/core/fromnumeric.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
+          <caret line="1451" column="4" selection-start-line="1451" selection-start-column="4" selection-end-line="1451" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xmm/xmm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.666667">
-          <caret line="5330" column="8" selection-start-line="5330" selection-start-column="8" selection-end-line="5330" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4219" column="8" selection-start-line="4219" selection-start-column="8" selection-end-line="4219" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -681,23 +670,31 @@
     <entry file="file://$PROJECT_DIR$/GaussianMixtureModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+          <caret line="4" column="112" selection-start-line="4" selection-start-column="112" selection-end-line="4" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HierarchicalHiddenMarkovModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fetchData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33948863">
-          <caret line="226" column="22" selection-start-line="226" selection-start-column="22" selection-end-line="226" selection-end-column="22" />
+        <state vertical-scroll-proportion="-1.5649794">
+          <caret line="87" column="49" selection-start-line="87" selection-start-column="49" selection-end-line="87" selection-end-column="49" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1041#1088#0" expanded="false" />
-            <element signature="e#1117#1157#0" expanded="false" />
-            <element signature="e#1187#1227#0" expanded="false" />
-            <element signature="e#1266#1292#0" expanded="false" />
-            <element signature="e#1331#1360#0" expanded="false" />
-            <element signature="e#1402#1428#0" expanded="false" />
+            <element signature="e#860#907#0" expanded="false" />
+            <element signature="e#936#976#0" expanded="false" />
+            <element signature="e#1006#1046#0" expanded="false" />
+            <element signature="e#1085#1111#0" expanded="false" />
+            <element signature="e#1150#1179#0" expanded="false" />
+            <element signature="e#1221#1247#0" expanded="false" />
           </folding>
         </state>
       </provider>
