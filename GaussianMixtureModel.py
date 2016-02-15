@@ -10,8 +10,6 @@ class GaussianMixtureModel:
         self.__debug = debug
 
     def fit(self, gestures):
-        # TODO gesture == 0 handle error
-
         training_set = xmm.TrainingSet()
         training_set.set_dimension(gestures[0].shape[1])
 

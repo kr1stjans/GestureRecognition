@@ -2,7 +2,7 @@ import xmm
 
 
 class HierarchicalHiddenMarkovModel:
-    def __init__(self, likelikehood_window=1, nb_mix_comp=10, rel_var_offset=1., abs_var_offset=0.01, debug=True):
+    def __init__(self, likelikehood_window=20, nb_mix_comp=10, rel_var_offset=1., abs_var_offset=0.01, debug=True):
         self.__hhmm = xmm.HierarchicalHMM()
         self.__hhmm.set_nbMixtureComponents(nb_mix_comp)
         self.__hhmm.set_varianceOffset(rel_var_offset, abs_var_offset)
