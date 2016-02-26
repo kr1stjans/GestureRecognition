@@ -10,13 +10,20 @@ class GaussianMixtureModel:
         self.__debug = debug
 
     def fit(self, gestures):
+        """
+        :param gestures: list of tuples, where first element is gesture name and second element is 2D numpy array
+        where rows are measurements and columns are attributes
+        :return:
+        """
+
         training_set = xmm.TrainingSet()
-        training_set.set_dimension(gestures[0].shape[1])
+        training_set.set_dimension(gestures[0][1].shape[1])
 
         for i in range(len(gestures)):
-            for frame in gestures[i]:
+            for frame in gestures[i][1]:
                 training_set.recordPhrase(i, frame)
-            training_set.setPhraseLabel(i, xmm.Label(i + 1))
+            training_set.setPhraseLabel(i, xmm.Label(gestures[i][0]))
+
         self.__gmm.set_trainingSet(training_set)
 
         self.__gmm.train()
@@ -27,7 +34,7 @@ class GaussianMixtureModel:
             print "Number of models: ", self.__gmm.size()
 
             for label in self.__gmm.models.keys():
-                print "Model", label.getInt(), ": trained in ", self.__gmm.models[
+                print "Model", label.getSym(), ": trained in ", self.__gmm.models[
                     label].trainingNbIterations, "iterations, loglikelihood = ", self.__gmm.models[
                     label].trainingLogLikelihood
 
