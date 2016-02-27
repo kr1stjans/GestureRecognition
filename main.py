@@ -3,18 +3,14 @@ import time
 from Queue import Queue
 
 import numpy as np
-from Domain.Mode import Mode
-from Domain.Mode import TRAINING_MODEL_MODES
 
 from Controllers import SoundController as SoundC
 from Controllers.ModeController import ModeController
-from Controllers.PlottingController import PlottingController
-from Controllers.SensorDataController import SensorDataController
+from Controllers.PlotController import PlotController
 from Controllers.SaveController import SaveController
-
-# with brew's python this causes error and plotting doesnt work
-import matplotlib.pyplot as plt
-
+from Controllers.SensorDataController import SensorDataController
+from Domain.Mode import Mode
+from Domain.Mode import TRAINING_MODEL_MODES
 from Models.GaussianMixtureModel import GaussianMixtureModel
 from Models.HierarchicalHiddenMarkovModel import HierarchicalHiddenMarkovModel
 
@@ -23,9 +19,6 @@ plotter1 = None
 plotter2 = None
 
 DEBUG = True
-
-PLOTTING_QUEUE_SIZE = 400
-ABS_Y_AXIS = 200
 
 PLOTTING_FPS = 16.0
 
@@ -38,22 +31,9 @@ def print_array(array):
     print "\r"
 
 
-def init_plot():
-    global figure, plotter1
-
-    plt.ion()
-    figure = plt.figure()
-    subplot1 = figure.add_subplot(221)
-    plt.axis((0, PLOTTING_QUEUE_SIZE, -ABS_Y_AXIS, ABS_Y_AXIS))
-    plotter1 = PlottingController(PLOTTING_QUEUE_SIZE, subplot1,
-                                  [("r", "a"), ("b", "b"), ("g", "c")])
-    plt.legend()
-    plt.show()
-
-
 if __name__ == "__main__":
 
-    init_plot()
+    plot_controller = PlotController(1)
 
     threadsafe_sensor_data_queue = Queue()
 
@@ -90,17 +70,18 @@ if __name__ == "__main__":
             if current_data is None:
                 continue
 
-            if time.time() - prev_time > 1.0 / PLOTTING_FPS:
-                prev_time = time.time()
-                recognition_model.update(current_data)
-                predicted = recognition_model.normalized_likelihoods()
-                print_array(predicted)
-                best_value = max(predicted)
-                if not math.isnan(best_value):
-                    # play sound bound to predicted gesture
-                    sound_controller.play(predicted.index(best_value))
-                else:
-                    print best_value, predicted
+            # update model
+            recognition_model.update(current_data)
+            predicted = recognition_model.normalized_likelihoods()
+            best_value = max(predicted)
+            best_value_index = math.isnan(best_value)
+            if not best_value_index:
+                # play sound bound to predicted gesture
+                sound_controller.play(predicted.index(best_value))
+            else:
+                print best_value, predicted
+
+            print_array(predicted)
 
         elif current_mode == Mode.START_RECORDING:
             # cant record without data
@@ -135,13 +116,15 @@ if __name__ == "__main__":
             # update model with current data
             recognition_model.update(current_data)
             # update plot
-            plotter1.update_plot(recognition_model.log_likelihoods())
+            predicted_likelihoods = recognition_model.log_likelihoods()
+
+            # update subplot
+            plot_controller.update_subplot(0, predicted_likelihoods)
+
             # redraw if enough time passed
             if time.time() - prev_time > 1.0 / PLOTTING_FPS:
                 prev_time = time.time()
-                figure.canvas.draw()
-                # hack to unfreeze canvas
-                plt.pause(0.0001)
+                plot_controller.redraw()
 
         elif current_mode == Mode.LOAD_GESTURE:
             # load gestures

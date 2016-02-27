@@ -1,7 +1,7 @@
 from collections import deque
 
 
-class PlottingController:
+class Plot:
     def __init__(self, size, canvas, params):
         self.__size = size
         self.__canvas = canvas
