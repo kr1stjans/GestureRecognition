@@ -125,7 +125,7 @@ byte SensorOrientation = BOTTOM;  // wifi chip & switches facing up
 
 //#define zeta  0.1f // zeta, the other free parameter in the Madgwick scheme usually set to a small or zero value
 #define ZETA_DEFAULT  0.0f
-#define BETA_DEFAULT 5.0f    // Much faster - noisier
+#define BETA_DEFAULT 0.4f    // Much faster - noisier
 //#define beta 0.041f    // 10 seconds or more to have the quaternion converge to the right orientation - super smooth
 
 float zeta = ZETA_DEFAULT;
