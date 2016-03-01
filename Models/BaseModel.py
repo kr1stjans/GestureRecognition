@@ -1,8 +1,10 @@
 import xmm
+from Controllers.SensorDataController import SensorDataController
 
 
 class BaseModel:
-    def __init__(self, model, likelikehood_window=1, nb_mix_comp=10, rel_var_offset=8., abs_var_offset=0.01):
+    def __init__(self, model, likelikehood_window=1, nb_mix_comp=10, rel_var_offset=8., abs_var_offset=0.01,
+                 data_types=('raw_acc', 'raw_rot')):
         """
         :param likelikehood_window:
         :param nb_mix_comp:
@@ -15,6 +17,7 @@ class BaseModel:
         self.__model.set_nbMixtureComponents(nb_mix_comp)
         self.__model.set_varianceOffset(rel_var_offset, abs_var_offset)
         self.__model.set_likelihoodwindow(likelikehood_window)
+        self.__data_types = data_types
 
     def train(self, gestures):
         """
@@ -24,22 +27,28 @@ class BaseModel:
         """
 
         training_set = xmm.TrainingSet()
+
         # get first gesture tuple
         first_gesture_tuple = gestures[0]
         # get 2D numpy array of gesture data
         gesture_measurements = first_gesture_tuple[1]
-        # attributes are columns, that is the second element of the shape
-        attributes_cnt = gesture_measurements.shape[1]
-        # training set dimension is number of gesture attributess
-        training_set.set_dimension(attributes_cnt)
+        # extract given attributes of the first element of the 2D numpy array
+        extracted_attributes = SensorDataController.extract_data(gesture_measurements[0], self.__data_types)
+        # length of the extracted attributes is the dimension of the model
+        training_set.set_dimension(len(extracted_attributes))
 
+        label_cnt = 1
         for i in range(len(gestures)):
             gesture_measurements = gestures[i][1]
-            gesture_name = gestures[i][0]
+            # append label count as prefix, because labels are internally lexicographically sorted.
+            # Label count must be 4 digit number, because 1 must be before 10 (0001 is before 0010).
+            gesture_name = str(label_cnt).zfill(4) + gestures[i][0]
+            label_cnt += 1
 
             # frame is vector of attributes at each time frame. size must match training set dimension
             for frame in gesture_measurements:
-                training_set.recordPhrase(i, frame)
+                extracted_attributes = SensorDataController.extract_data(frame, self.__data_types)
+                training_set.recordPhrase(i, extracted_attributes)
             training_set.setPhraseLabel(i, xmm.Label(gesture_name))
 
         self.__model.set_trainingSet(training_set)
@@ -49,7 +58,10 @@ class BaseModel:
         self.__model.performance_init()
 
     def update(self, gesture):
-        self.__model.performance_update(xmm.vectorf(gesture))
+        # extract attributes that we want to use
+        extracted = SensorDataController.extract_data(gesture, self.__data_types)
+        # update model with extracted data
+        self.__model.performance_update(xmm.vectorf(extracted))
 
     def log_likelihoods(self):
         return list(self.__model.results_log_likelihoods)

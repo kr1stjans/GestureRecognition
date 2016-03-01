@@ -14,15 +14,12 @@ from Domain.Mode import TRAINING_MODEL_MODES
 from Models.GaussianMixtureModel import GaussianMixtureModel
 from Models.HierarchicalHiddenMarkovModel import HierarchicalHiddenMarkovModel
 
-figure = None
-plotter1 = None
-plotter2 = None
-
 DEBUG = True
 
 PLOTTING_FPS = 16.0
 
-temp_sounds = ["DMaj", "GMaj", "BMin", "DMin", "Emin", "FMin"]
+temp_sounds = ["Amaj", "Emaj", "F#min", "Dmaj"]
+direct_gesture_load_names = ["init", "right", "left"]
 
 
 def print_array(array):
@@ -59,7 +56,7 @@ if __name__ == "__main__":
 
         # consume one queue data if it exists
         if not threadsafe_sensor_data_queue.empty():
-            current_data = SensorDataController.get_list_data(threadsafe_sensor_data_queue.get(), "raw")
+            current_data = threadsafe_sensor_data_queue.get()
 
         if current_mode == Mode.RECOGNIZING:
             # cant recognize without model and sound controller initialized
@@ -95,13 +92,14 @@ if __name__ == "__main__":
             if len(current_gesture) > 0:
                 # get gesture name
                 current_gesture_name = raw_input("Enter gesture name: ")
-                # save gesture
-                gestureNpArray = np.array(current_gesture)
-                SaveController.save_recorded_gesture(current_gesture_name, gestureNpArray)
+                # convert to numpy array
+                np_gestures = np.array(current_gesture)
+                # save gesture to file
+                SaveController.save_recorded_gesture(current_gesture_name, np_gestures)
 
                 # append tuple of gesture name and 2D numpy array
                 # where rows are measurements and columns are attributes
-                recorded_gestures.append((current_gesture_name, gestureNpArray))
+                recorded_gestures.append((current_gesture_name, np_gestures))
                 current_gesture = []
             else:
                 print "No data received from the sensor during gesture recording!"
@@ -128,7 +126,7 @@ if __name__ == "__main__":
 
         elif current_mode == Mode.LOAD_GESTURE:
             # load gestures
-            loaded_gestures = SaveController.load_recorded_gesture()
+            loaded_gestures = SaveController.load_recorded_gesture_by_name()
             # extended recorded gestures with loaded gestures
             recorded_gestures.extend(loaded_gestures)
             # reset mode after gesture loading complete
@@ -155,3 +153,9 @@ if __name__ == "__main__":
             sensor_data_controller.stop()
             print "Quit."
             break
+
+        elif current_mode == Mode.IMMEDIATE_GESTURES_LOAD:
+            for name in direct_gesture_load_names:
+                recorded_gestures.extend(SaveController.load_recorded_gesture(name))
+            # reset mode after gesture loading complete
+            mode_controller.reset_mode()

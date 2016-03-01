@@ -8,6 +8,7 @@ class Mode:
     # models
     HHMM = 6
     GMM = 7
+    IMMEDIATE_GESTURES_LOAD = 8
 
 
 # set of modes where we must not call blocking char read

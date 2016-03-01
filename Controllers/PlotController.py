@@ -12,12 +12,12 @@ class PlotController:
 
         self.__subplots = []
 
-        # optimal grid size is ceiled subplot_cnt / 2 x subplot_cnt / 2
-        grid_size = 1
+        # get optimal grid size
+        grid_size = self.calculate_grid(subplot_cnt)
 
         # construct subplots
         for i in range(subplot_cnt):
-            subplot = self.__figure.add_subplot(grid_size, grid_size, i + 1)
+            subplot = self.__figure.add_subplot(grid_size[0], grid_size[1], i + 1)
             plt.axis((0, plotting_queue_size, -abs_y_axis, abs_y_axis))
             self.__subplots.append(Plot(plotting_queue_size, subplot,
                                         [("r", "a"), ("b", "b"), ("g", "c")]))
@@ -37,3 +37,15 @@ class PlotController:
         self.__figure.canvas.draw()
         # hack to unfreeze canvas
         plt.pause(0.0001)
+
+    @staticmethod
+    def calculate_grid(subplot_cnt):
+        """
+        Supports grid of max 4 x 4 = 16.
+        :param subplot_cnt:
+        :return:
+        """
+        for i in range(1, 4):
+            for j in range(1, 4):
+                if i * j <= subplot_cnt:
+                    return i, j

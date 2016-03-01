@@ -3,6 +3,7 @@ from threading import Thread
 import readchar
 from Domain.Mode import MODES_WITH_USER_INPUT
 from Domain.Mode import Mode
+import pygame
 
 
 class ModeController(Thread):
@@ -37,6 +38,8 @@ class ModeController(Thread):
                 self.__current_mode = Mode.GMM
             elif pressed_key == '2':
                 self.__current_mode = Mode.HHMM
+            elif pressed_key == 'd':
+                self.__current_mode = Mode.IMMEDIATE_GESTURES_LOAD
 
     def stop(self):
         self.__read_char = False

@@ -2,11 +2,12 @@ import socket
 import sys
 import struct
 import itertools
+import time
 from threading import Thread
 
 
 class SensorDataController(Thread):
-    def __init__(self, queue, port=10337):
+    def __init__(self, queue, port=10337, minimum_time_between_packets=0.05):
         """
         Init nonblocking socket from specified port.
         :param queue:
@@ -19,6 +20,7 @@ class SensorDataController(Thread):
         self.__recorded_data_stream = []
         self.__data_tuple = {}
         self.__receive = True
+        self.__minimum_time_between_packets = minimum_time_between_packets
 
         try:
             # initialize UDP socket
@@ -37,11 +39,25 @@ class SensorDataController(Thread):
         Start receiving data.
         :return:
         """
+
+        last_packet_timestamp = None
+
+        # warm up. first few hundred packets are processed with delay
+        for i in range(0, 5000):
+            try:
+                self.__sock.recvfrom(1024)
+                last_packet_timestamp = time.time()
+            except socket.error as e:
+                # code 35 = no data ready exception when in non-blocking read
+                if e[0] != 35:
+                    print e
+
+        print "Data receiving started.\r"
+
         while self.__receive:
             try:
                 # read data if available
                 sensor_data, _ = self.__sock.recvfrom(1024)
-
                 if sensor_data[:6] == "/0/raw":
                     self.unpack_raw_to_map(sensor_data)
                 elif sensor_data[:6] == "/0/eul":
@@ -49,7 +65,21 @@ class SensorDataController(Thread):
                 elif sensor_data[:6] == "/0/qua":
                     self.unpack_qua_to_map(sensor_data)
 
+                # data tuple of length 15 means all three packets of data received
                 if len(self.__data_tuple) == 15:
+
+                    current_time = time.time()
+                    time_between_packets = float(current_time) - float(last_packet_timestamp)
+
+                    # if packets are arriving too slow, throw exception
+                    if time_between_packets > self.__minimum_time_between_packets:
+                        raise Exception(
+                                "Packets arriving too slowly! Actual time between packets: " + str(
+                                        time_between_packets) + ". Minimum allowed time between packets: " + str(
+                                        self.__minimum_time_between_packets) + ". Please reboot the chip.\r")
+
+                    # set last packet timestamp
+                    last_packet_timestamp = current_time
                     # send data to main thread
                     self.__queue.put(self.__data_tuple.copy())
                     # clear collected data map
@@ -93,9 +123,15 @@ class SensorDataController(Thread):
         return 2.0 * val / 25000.0
 
     @staticmethod
-    def get_list_data(data_tuple, data_type):
+    def extract_data(data_map, data_types):
+        """
+        :param data_map: map of all data (raw, euler, quaternion)
+        :param data_types: list of data types to include
+        :return:
+        """
         result = list()
-        for k, v in data_tuple.iteritems():
-            if data_type in k:
-                result.append(v)
+        for k, v in data_map.iteritems():
+            for d in data_types:
+                if d in k:
+                    result.append(v)
         return result
