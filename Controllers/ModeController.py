@@ -3,7 +3,6 @@ from threading import Thread
 import readchar
 from Domain.Mode import MODES_WITH_USER_INPUT
 from Domain.Mode import Mode
-import pygame
 
 
 class ModeController(Thread):
