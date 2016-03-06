@@ -1,17 +1,19 @@
 class Mode:
-    RECOGNIZING = 0
+    IDLE = -1
+    START_RECOGNIZING = 0
     START_RECORDING = 1
     STOP_RECORDING = 2
-    PLOTTING = 3
-    QUIT = 4
-    LOAD_GESTURE = 5
+    GET_RECORDING_GESTURE_NAME = 3
+    PLOTTING = 4
+    QUIT = 5
+    LOAD_GESTURE = 6
     # models
-    HHMM = 6
-    GMM = 7
-    IMMEDIATE_GESTURES_LOAD = 8
+    HHMM = 7
+    GMM = 8
+    IMMEDIATE_GESTURES_LOAD = 9
 
 
 # set of modes where we must not call blocking char read
-MODES_WITH_USER_INPUT = {Mode.STOP_RECORDING, Mode.LOAD_GESTURE, Mode.QUIT}
+MODES_WITH_USER_INPUT = {Mode.LOAD_GESTURE, Mode.QUIT, Mode.GET_RECORDING_GESTURE_NAME}
 
 TRAINING_MODEL_MODES = {Mode.HHMM, Mode.GMM}

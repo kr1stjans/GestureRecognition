@@ -40,17 +40,21 @@ class SensorDataController(Thread):
         :return:
         """
 
+        """
         last_packet_timestamp = None
 
         # warm up. first few hundred packets are processed with delay
-        for i in range(0, 5000):
+        i = 0
+        while i < 1000:
             try:
-                self.__sock.recvfrom(1024)
+                _, _ = self.__sock.recvfrom(1024)
+                i += 1
                 last_packet_timestamp = time.time()
             except socket.error as e:
                 # code 35 = no data ready exception when in non-blocking read
                 if e[0] != 35:
                     print e
+        """
 
         print "Data receiving started.\r"
 
@@ -58,6 +62,7 @@ class SensorDataController(Thread):
             try:
                 # read data if available
                 sensor_data, _ = self.__sock.recvfrom(1024)
+                # print sensor_data + "\r"
                 if sensor_data[:6] == "/0/raw":
                     self.unpack_raw_to_map(sensor_data)
                 elif sensor_data[:6] == "/0/eul":
@@ -67,8 +72,8 @@ class SensorDataController(Thread):
 
                 # data tuple of length 15 means all three packets of data received
                 if len(self.__data_tuple) == 15:
-
-                    current_time = time.time()
+                    """current_time = time.time()
+                    print current_time, last_packet_timestamp
                     time_between_packets = float(current_time) - float(last_packet_timestamp)
 
                     # if packets are arriving too slow, throw exception
@@ -79,7 +84,7 @@ class SensorDataController(Thread):
                                         self.__minimum_time_between_packets) + ". Please reboot the chip.\r")
 
                     # set last packet timestamp
-                    last_packet_timestamp = current_time
+                    last_packet_timestamp = current_time"""
                     # send data to main thread
                     self.__queue.put(self.__data_tuple.copy())
                     # clear collected data map
