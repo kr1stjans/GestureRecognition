@@ -30,7 +30,7 @@ class ModeController(Thread):
             elif pressed_key == 'i':
                 self.__current_mode = Mode.IDLE
             elif pressed_key == 's':
-                print "Started recognizing\r"
+                print "Recognizing\r"
                 self.__current_mode = Mode.START_RECOGNIZING
             elif pressed_key == 'q':
                 self.__current_mode = Mode.QUIT

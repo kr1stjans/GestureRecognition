@@ -20,7 +20,7 @@ class PlotController:
             subplot = self.__figure.add_subplot(grid_size[0], grid_size[1], i + 1)
             plt.axis((0, plotting_queue_size, -abs_y_axis, abs_y_axis))
             self.__subplots.append(Plot(plotting_queue_size, subplot,
-                                        [("r", "a"), ("b", "b"), ("g", "c")]))
+                                        [("r", "a"), ("b", "b"), ("g", "c"), ("y", "d"), ("orange", "e")]))
         plt.legend()
         plt.show()
 

@@ -14,6 +14,6 @@ class Mode:
 
 
 # set of modes where we must not call blocking char read
-MODES_WITH_USER_INPUT = {Mode.LOAD_GESTURE, Mode.QUIT, Mode.GET_RECORDING_GESTURE_NAME}
+MODES_WITH_USER_INPUT = {Mode.LOAD_GESTURE, Mode.GET_RECORDING_GESTURE_NAME, Mode.QUIT}
 
 TRAINING_MODEL_MODES = {Mode.HHMM, Mode.GMM}

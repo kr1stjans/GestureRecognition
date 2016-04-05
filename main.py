@@ -17,7 +17,7 @@ DEBUG = True
 PLOTTING_FPS = 16.0
 
 temp_sounds = ["Amaj", "Emaj", "F#min", "Dmaj"]
-direct_gesture_load_names = ["init", "prvi", "drugi", "tretji", "cetrti"]
+direct_gesture_load_names = ["init", "left", "rotate", "up", "downwards"]
 
 
 def print_array(array):
@@ -48,9 +48,10 @@ if __name__ == "__main__":
     current_gesture = []
     current_gesture_name = None
     recorded_gestures_map = OrderedDict()
+
     prev_time = 0.0
 
-    # init new sensor data controller thread that will stream received data to queue
+    # init new sensor data controller thread that will stream received data to specified queue
     sensor_data_controller = SensorDataController(threadsafe_sensor_data_queue)
     sensor_data_controller.start()
 
@@ -111,13 +112,13 @@ if __name__ == "__main__":
                 # save gesture to file
                 SaveController.save_recorded_gesture(current_gesture_name, current_gesture)
 
-                # append gesture to map. current gesture list must be wrapper into another list
+                # append gesture to map. current gesture list must be wrapped into another list
                 append_recorded_gestures(recorded_gestures_map, current_gesture_name, [current_gesture])
 
                 # clear current gesture
                 current_gesture = []
             else:
-                raise Exception("No data received from the sensor during gesture recording!\r")
+                print("No data received from the sensor during gesture recording! Please reboot the sensor.\r")
 
             mode_controller.reset_mode()
 
@@ -133,11 +134,8 @@ if __name__ == "__main__":
 
             # update model with current data
             recognition_model.update(current_data)
-            # update plot
-            predicted_likelihoods = recognition_model.log_likelihoods()
-
             # update subplot
-            plot_controller.update_subplot(0, predicted_likelihoods)
+            plot_controller.update_subplot(0, recognition_model.log_likelihoods())
 
             # redraw if enough time passed
             if time.time() - prev_time > 1.0 / PLOTTING_FPS:

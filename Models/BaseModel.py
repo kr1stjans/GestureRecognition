@@ -3,7 +3,7 @@ from Controllers.SensorDataController import SensorDataController
 
 
 class BaseModel:
-    def __init__(self, model, likelikehood_window=1, nb_mix_comp=10, rel_var_offset=5., abs_var_offset=0.01,
+    def __init__(self, model, likelikehood_window=5, nb_mix_comp=10, rel_var_offset=1., abs_var_offset=0.01,
                  data_types=('raw_acc', 'raw_rot')):
         """
         :param likelikehood_window:
