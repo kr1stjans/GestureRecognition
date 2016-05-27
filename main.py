@@ -16,8 +16,9 @@ DEBUG = True
 
 PLOTTING_FPS = 16.0
 
-temp_sounds = ["Amaj", "Emaj", "F#min", "Dmaj"]
-direct_gesture_load_names = ["init", "left", "rotate", "up", "downwards"]
+# temp_sounds = ["Amaj", "Emaj", "F#min", "Dmaj"]
+temp_sounds = ["bass_d", "bass_g", "chord_bm", "chord_f#m", "melody_down", "melody_up"]
+direct_gesture_load_names = ["init", "left", "up"]
 
 
 def print_array(array):

@@ -21,8 +21,8 @@ class SoundController:
         if self.__last_index != index:
             self.__last_index = index
             self.__acc = 0
-        elif self.__acc >= 75:
-            sound = pygame.mixer.Sound("sounds/" + self.__sounds[index - 1] + ".wav")
+        elif self.__acc >= 80:
+            sound = pygame.mixer.Sound("pitch_sounds/" + self.__sounds[index - 1] + ".wav")
             sound.play()
             self.__acc = -1
         elif self.__acc != -1:
